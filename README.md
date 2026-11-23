@@ -6,11 +6,10 @@
 **Status:** Pertemuan 12 — persiapan dan pilot test selesai; pengumpulan data utama terjadwal.
 
 ## Orang-orang hebat
-- **Al Adhlu Sodri Niwrad**
---------------------------------------------
 - **Azizul Rizky Mahadi**
 - **Dzaky Ribal Faiz**
 --------------------------------------------
+- **Al Adhlu Sodri Niwrad**
 - **Farhan Dwi Saputra**
 - **Muhammad Al Fikry Akbar**
 - **Akbar Rizki Lingga**
