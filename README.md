@@ -1,88 +1,107 @@
 # Hacienda Del Part — DNS Resolution Performance Research
 
-**Judul:** Analisis Perbandingan Waktu Resolusi DNS pada Resolver Google, Cloudflare, dan ISP Berdasarkan Pendekatan Probabilitas dan Statistika  
+**Judul penelitian:** Analisis Perbandingan Waktu Resolusi DNS pada Resolver Google, Cloudflare, dan ISP Berdasarkan Pendekatan Probabilitas dan Statistika  
 **Subtema:** Network Performance Analysis  
 **Mata kuliah:** Probabilitas dan Statistika (INF12107)  
-**Status:** Pertemuan 12 — persiapan dan pilot test selesai; pengumpulan data utama terjadwal.
+**Status per 24 November 2026:** Persiapan, verifikasi konektivitas resolver, pilot test, dan revisi rancangan selesai. **Pengumpulan dataset utama belum dilaksanakan.**
 
-## Orang-orang hebat
-- **Azizul Rizky Mahadi**
-- **Dzaky Ribal Faiz**
---------------------------------------------
-- **Al Adhlu Sodri Niwrad**
-- **Farhan Dwi Saputra**
-- **Muhammad Al Fikry Akbar**
-- **Akbar Rizki Lingga**
-- **Bayu Adhandika**
-- **Abdul Hafidz**
+## Gambaran penelitian
+Penelitian kuantitatif komparatif ini membandingkan waktu respons kueri DNS record **A** menggunakan satu laptop dan satu jaringan Wi-Fi pada **satu sesi pengukuran**. Tiga resolver yang diuji:
 
-## Ringkasan
-Penelitian kuantitatif berbasis pengukuran langsung yang membandingkan waktu penyelesaian kueri DNS record A dari satu laptop dan jaringan Wi-Fi yang sama. Resolver yang dibandingkan: **Google Public DNS (`8.8.8.8`)**, **Cloudflare (`1.1.1.1`)**, dan **DNS bawaan jaringan (`103.29.106.17`)**. Alamat ketiga terkonfigurasi pada koneksi yang digunakan, tetapi status sebagai resolver yang dioperasikan langsung oleh ISP **belum terverifikasi**. Koneksi internet publik teridentifikasi sebagai PT SOLNET INDONESIA (AS9422); registrasi blok IP DNS ketiga tercatat atas nama SOLONE PTE LTD.
+| Label dalam CSV | Resolver | Alamat IP |
+|---|---|---|
+| `google` | Google Public DNS | `8.8.8.8` |
+| `cloudflare` | Cloudflare DNS | `1.1.1.1` |
+| `isp` | DNS bawaan jaringan (identitas operator belum terverifikasi) | `103.29.106.17` |
 
-Setiap pengukuran mencatat waktu kueri (ms), RTT ICMP (ms), status DNS, resolver, domain, kondisi pengujian, timestamp, putaran, sesi dan `run_id`. Kondisi `acak` menggunakan subdomain acak; `ulang` adalah kueri kedua terhadap domain yang telah dipanaskan. **Kedua label tersebut bukan bukti pasti cache miss/cache hit.** RTT ICMP dan waktu kueri DNS merupakan dua metrik berbeda.
+Alamat ketiga muncul pada konfigurasi DNS koneksi Wi-Fi penelitian. Hasil identifikasi koneksi publik menunjukkan PT SOLNET INDONESIA (AS9422), sedangkan registrasi blok IP `103.29.106.17` menunjukkan SOLONE PTE LTD. **Belum terbukti resolver ketiga dioperasikan langsung oleh ISP.** Label `isp` di CSV dipertahankan demi kompatibilitas dengan collector, sementara laporan menggunakan istilah **DNS bawaan jaringan**.
 
-## Rancangan pengumpulan data
-- Periode: **24–26 November 2026**, waktu Indonesia Barat (WIB).
-- Tiga sesi per hari: **08.00 (pagi), 13.00 (siang), 20.00 (malam)**; tiga putaran tiap sesi.
-- Setiap putaran: 10 domain × 3 resolver × 2 kondisi = **60 observasi**.
-- Target: **180 observasi/sesi**, **540 observasi/hari**, **1.620 observasi/3 hari**. Ini jumlah baris, **bukan** jaminan semua respons `ok`.
-- Gunakan satu laptop, satu koneksi Wi-Fi yang sama, dan pengaturan pengujian yang tidak berubah selama penelitian.
-- Detail jadwal, aturan wajib, dan format catatan: [`docs/LOGBOOK_PENGUMPULAN_DATA.md`](docs/LOGBOOK_PENGUMPULAN_DATA.md).
+## Desain pengumpulan data — revisi satu sesi
+- **Durasi:** satu sesi pada tanggal dan jam aktual yang dicatat di logbook; **tidak ada perbandingan pagi, siang, dan malam**.
+- **Putaran:** `10` dalam satu kali eksekusi collector.
+- **Per putaran:** 10 domain × 3 resolver × 2 kondisi kueri = **60 catatan**.
+- **Target satu sesi:** **600 baris observasi** (200 per resolver; 100 `acak` dan 100 `ulang` per resolver), termasuk status respons negatif atau gagal.
+- **Kondisi `acak`:** kueri ke subdomain acak dari domain pengujian.
+- **Kondisi `ulang`:** kueri kedua ke domain yang sama setelah kueri pemanasan.
+- Kedua kondisi **bukan bukti terverifikasi** bahwa terjadi cache miss atau cache hit.
+- Urutan domain dan resolver diacak; `run_id` membedakan tiap eksekusi.
+- `rtt_ms` adalah RTT ICMP dari `ping`, **bukan** waktu kueri DNS. Satu nilai RTT diukur per putaran per resolver dan digunakan pada beberapa observasi DNS; akibatnya 600 baris tidak sepenuhnya independen.
 
-## Struktur project
+Baca dokumen metode [`docs/REVISI_RANCANGAN_METODOLOGI.docx`](docs/REVISI_RANCANGAN_METODOLOGI.docx) dan catat pelaksanaan dalam [`docs/LOGBOOK_PENGUMPULAN_DATA_HACIENDA_REVISI_1_SESI.xlsx`](docs/LOGBOOK_PENGUMPULAN_DATA_HACIENDA_REVISI_1_SESI.xlsx).
+
+## Struktur repository
 ```text
 hacienda-dns/
-├── src/dns_collector.py        # kode pengumpul data
-├── data/pilot/dns_pilot.csv    # dataset percobaan (60 observasi)
-├── data/raw/dns_data.csv      # dataset utama, dibuat saat pengukuran
-├── data/processed/            # dataset hasil cleaning (tahap berikutnya)
-├── notebooks/                 # notebook statistik (tahap berikutnya)
+├── src/
+│   └── dns_collector.py
+├── data/
+│   ├── pilot/
+│   │   └── dns_pilot.csv           # pilot test, 60 observasi
+│   ├── raw/
+│   │   └── dns_data.csv            # dibuat ketika pengumpulan utama dimulai
+│   └── processed/                  # hasil cleaning, belum dibuat
+├── notebooks/                     # notebook analisis, belum dibuat
 ├── docs/
-│   ├── LOGBOOK_PENGUMPULAN_DATA.md
+│   ├── REVISI_RANCANGAN_METODOLOGI.docx
+│   ├── LOGBOOK_PENGUMPULAN_DATA_HACIENDA_REVISI_1_SESI.xlsx
 │   └── RINGKASAN_PROGRES_P12.md
-├── requirements.txt
 ├── .gitignore
+├── requirements.txt
 └── README.md
 ```
 
-## Persiapan dan cara menjalankan
-Python 3.12 digunakan saat persiapan. Pastikan terminal ada di akar repository.
+> Struktur ini mencakup file yang **direncanakan**. Folder atau file yang belum dibuat tidak berarti prosesnya sudah selesai. Bila nama dokumen berbeda di repository, sesuaikan tautan di atas dengan nama akhirnya.
+
+## Instalasi dan pengujian
+Persiapan dilakukan di Linux Mint menggunakan Python 3.12.3. Dari akar repository:
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
 python -m py_compile src/dns_collector.py
+python src/dns_collector.py --help
 ```
 
-Jalankan pada jam yang **benar-benar sesuai**, bukan dengan mengganti label sesi pada waktu lain:
+**Perintah pengukuran utama (jalankan hanya satu kali sesuai rencana ketika siap):**
 
 ```bash
-# 08.00 WIB
-python src/dns_collector.py --isp 103.29.106.17 --rounds 3 --sesi pagi
-# 13.00 WIB
-python src/dns_collector.py --isp 103.29.106.17 --rounds 3 --sesi siang
-# 20.00 WIB
-python src/dns_collector.py --isp 103.29.106.17 --rounds 3 --sesi malam
+python src/dns_collector.py --isp 103.29.106.17 --rounds 10
 ```
 
-Program **menambahkan** baris ke `data/raw/dns_data.csv` (append), tidak menimpa file sebelumnya. Jangan menjalankan ulang sesi yang sudah berhasil tanpa menulis alasan dan identitas `run_id` pada logbook. Simpan file mentah apa adanya dan buat salinan untuk cleaning.
+Program menulis ke `data/raw/dns_data.csv` dalam mode **append**, sehingga pelaksanaan ulang akan menambah baris, bukan mengganti data lama. Pastikan file dataset utama belum terisi pengukuran yang tidak sengaja. Setelah selesai:
 
-## Ringkasan pilot test (24 November 2026, 00.48 WIB)
-- `run_id`: `9e5e799b056e`, sesi `malam`, 1 putaran.
-- 60 observasi, 12 kolom, 20 observasi per resolver; masing-masing 10 `acak` + 10 `ulang`.
-- Tidak ditemukan missing value dan baris identik berdasarkan pemeriksaan awal.
-- Per resolver: 10 `ok`, 9 `nxdomain`, 1 `noanswer`; ketiga kasus `noanswer` terjadi pada subdomain acak `github.com`.
-- File pilot telah diarsipkan sebagai `data/pilot/dns_pilot.csv` (61 baris termasuk header) dan dipisahkan dari data utama.
-- Angka pilot **bukan** kesimpulan tentang DNS tercepat. Detail ada di [`docs/RINGKASAN_PROGRES_P12.md`](docs/RINGKASAN_PROGRES_P12.md).
+```bash
+wc -l data/raw/dns_data.csv
+```
 
-## Rencana analisis
-1. **Pertemuan 12:** audit, cleaning, mean, median, min–max, varians, standar deviasi, kuartil.
-2. **Pertemuan 13:** EDA, histogram, boxplot, scatter plot, interpretasi.
-3. **Pertemuan 14:** simulasi probabilitas, estimasi, uji hipotesis.
-4. **Pertemuan 15:** korelasi Pearson, regresi linear sederhana, laporan dan presentasi akhir.
+Untuk file baru dengan 600 observasi, jumlahnya **601 baris termasuk header**. Periksa `run_id`, status, dan jumlah data, lalu isi logbook. Jangan mengubah dataset mentah, menghapus respons yang tidak diharapkan, atau mengganti label sesi secara fiktif.
 
-**Catatan:** Hasil berdasarkan `acak` dan `ulang` dianalisis terpisah; respons `ok`, `nxdomain`, dan `noanswer` tidak digabung tanpa menjelaskan perbedaannya. Pengukuran gagal juga tetap dilacak sebagai outcome, bukan dihapus diam-diam.
+## Hasil pilot test — bukan hasil utama
+Pilot test dilakukan pada **24 November 2026 sekitar 00.48 WIB** dengan `run_id=9e5e799b056e` (1 putaran):
+- 60 observasi, 12 kolom; 20 observasi per resolver (10 `acak`, 10 `ulang`).
+- Tidak ditemukan nilai kosong atau baris duplikat identik pada audit awal; RTT tersedia untuk seluruh baris.
+- Per resolver: 10 respons `ok`, 9 `nxdomain`, 1 `noanswer`.
+- Seluruh `noanswer` terjadi pada subdomain acak `github.com`.
+- File pilot diarsipkan terpisah sebagai `data/pilot/dns_pilot.csv` (61 baris termasuk header).
 
-## Reproduksibilitas
-Jangan mengubah data mentah, parameter collector, daftar domain, resolver, atau koneksi secara diam-diam selama pengumpulan. Catat setiap penyimpangan nyata, termasuk keterlambatan jadwal, kehilangan koneksi, restart, atau eksekusi tambahan. Dokumentasi ini merupakan ringkasan keputusan penting, bukan transkrip percakapan lengkap.
+Rata-rata pilot (ms, 10 observasi per sel):
+
+| Resolver | `acak` | `ulang` |
+|---|---:|---:|
+| Cloudflare | 36,131 | 19,745 |
+| Google | 33,120 | 26,218 |
+| DNS bawaan jaringan | 41,272 | 15,713 |
+
+Angka pilot **tidak** digunakan untuk menentukan resolver tercepat secara umum. Informasi lengkap ada pada [`docs/RINGKASAN_PROGRES_P12.md`](docs/RINGKASAN_PROGRES_P12.md).
+
+## Rencana analisis sesuai panduan dosen
+1. **Pertemuan 12:** kumpulkan data utama, audit/cleaning terpisah, statistik deskriptif (mean, median, minimum, maksimum, varians, standar deviasi, kuartil, dan modus jika relevan).
+2. **Pertemuan 13:** eksplorasi distribusi dan outlier; histogram, boxplot, scatter plot.
+3. **Pertemuan 14:** simulasi probabilitas, estimasi parameter, serta uji hipotesis sesuai asumsi dan desain pengukuran.
+4. **Pertemuan 15:** korelasi Pearson dan regresi linear sederhana, dengan perhatian khusus pada dependensi data RTT; finalisasi laporan dan presentasi.
+
+Perbandingan waktu kueri `acak` dan `ulang` dianalisis terpisah; respons `ok`, `nxdomain`, `noanswer`, dan `timeout` **tidak diperlakukan sebagai kategori yang setara tanpa penjelasan**. Karena pengukuran dilakukan pada satu jaringan dan satu sesi, hasil penelitian tidak dapat digeneralisasikan ke seluruh waktu dan jaringan. Untuk inferensi statistik, pengukuran berulang dan struktur pasangan/domain/putaran harus diperhitungkan.
+
+## Etika dan reproduksibilitas
+Pertahankan data mentah, arsipkan pilot secara terpisah, dokumentasikan tanggal serta waktu mulai/selesai aktual, jaringan, perubahan konfigurasi, kendala, dan `run_id`. Semua perubahan metode ditulis secara eksplisit. **Jangan mengklaim pengumpulan data utama, cleaning, atau hasil analisis yang belum dikerjakan.**

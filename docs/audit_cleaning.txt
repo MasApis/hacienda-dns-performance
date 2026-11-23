@@ -1,0 +1,19 @@
+AUDIT DATA CLEANING - HACIENDA DEL PART
+Dataset asli: 600
+Dataset cleaned: 600
+Dataset analisis utama: 300
+Baris dihapus: 0
+Missing values: 0
+Duplikasi kombinasi: 0
+
+Status query:
+status
+ok          300
+nxdomain    270
+noanswer     30
+
+Keputusan:
+Seluruh observasi valid dipertahankan.
+NXDOMAIN dan NoAnswer bukan otomatis kegagalan.
+Analisis utama menggunakan query ulang status OK.
+Kondisi cache tidak diverifikasi secara langsung.
