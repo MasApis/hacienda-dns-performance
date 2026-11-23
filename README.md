@@ -5,6 +5,18 @@
 **Mata kuliah:** Probabilitas dan Statistika (INF12107)  
 **Status:** Pertemuan 12 — persiapan dan pilot test selesai; pengumpulan data utama terjadwal.
 
+## Orang-orang hebat
+**Al Adhlu Sodri Niwrad**
+--------------------------------------------
+**Azizul Rizki Mahadi**
+**Dzaky Ribal Faiz**
+--------------------------------------------
+**Farhan Dwi Saputra**
+**Muhammad Al Fikry Akbar**
+**Akbar Rizki Lingga**
+**Bayu Adhandika**
+**Abdul Hafidz**
+
 ## Ringkasan
 Penelitian kuantitatif berbasis pengukuran langsung yang membandingkan waktu penyelesaian kueri DNS record A dari satu laptop dan jaringan Wi-Fi yang sama. Resolver yang dibandingkan: **Google Public DNS (`8.8.8.8`)**, **Cloudflare (`1.1.1.1`)**, dan **DNS bawaan jaringan (`103.29.106.17`)**. Alamat ketiga terkonfigurasi pada koneksi yang digunakan, tetapi status sebagai resolver yang dioperasikan langsung oleh ISP **belum terverifikasi**. Koneksi internet publik teridentifikasi sebagai PT SOLNET INDONESIA (AS9422); registrasi blok IP DNS ketiga tercatat atas nama SOLONE PTE LTD.
 
