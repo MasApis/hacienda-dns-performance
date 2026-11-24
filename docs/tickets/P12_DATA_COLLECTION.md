@@ -9,10 +9,10 @@
 | **Deskripsi pekerjaan** | Menentukan topik, rumusan masalah, tujuan, dan variabel; menyiapkan lingkungan dan collector; menjalankan pilot; mengumpulkan 600 observasi; memvalidasi dan membersihkan data; menghitung statistik deskriptif pada notebook tahap pertama. |
 | **Input** | Panduan dosen, rancangan revisi satu sesi, 10 domain, 3 alamat resolver, Python 3.12.3. |
 | **Output yang diharapkan** | Dataset asli & cleaned, logbook terisi, tabel statistik deskriptif, notebook tahap pertama, catatan audit. |
-| **Status** | **DONE dengan catatan** (9/10 sub-ticket DONE, 1 TODO) |
+| **Status** | **DONE** (10/10 sub-ticket DONE) |
 | **Bukti** | `data/raw/dns_data.csv`, `data/processed/`, `docs/audit_cleaning.txt`, `notebooks/analisis_probstat.ipynb`, `docs/LOGBOOK_PENGUMPULAN_DATA_HACIENDA.xlsx` |
 | **Dependensi** | Tidak ada |
-| **Catatan kendala & keputusan** | Rancangan 1.620 observasi (3 hari × 3 sesi) dibatalkan; final satu sesi 600 observasi. Data pilot tidak digabung. P12-10 (uji keterulangan notebook) belum disetujui untuk dikerjakan. |
+| **Catatan kendala & keputusan** | Rancangan 1.620 observasi (3 hari × 3 sesi) dibatalkan; final satu sesi 600 observasi. Data pilot tidak digabung. P12-10 (uji keterulangan notebook) selesai dan terverifikasi. |
 
 ## P12-01 — Penentuan topik, rumusan masalah, tujuan, dan variabel
 
@@ -115,11 +115,11 @@
 
 ## P12-10 — Uji keterulangan notebook
 
-- **Status:** TODO
+- **Status:** DONE
 - **Tujuan:** Memastikan notebook dapat dijalankan dari root repository tanpa kegagalan path.
-- **Deskripsi:** Perbaiki penentuan `ROOT` yang saat ini bergantung pada `cwd == notebooks/`, hapus cell kosong, lalu jalankan ulang dan bandingkan CSV hasil.
+- **Deskripsi:** Perbaiki penentuan `ROOT` agar naik satu level bila dataset tidak ditemukan di `cwd`, hapus cell kosong, lalu jalankan ulang dan bandingkan CSV hasil.
 - **Input:** `notebooks/analisis_probstat.ipynb`.
-- **Output/Bukti:** belum tersedia.
+- **Output/Bukti:** `notebooks/analisis_probstat.ipynb` (6 cell, 0 kosong, execution count 1–5); `data/processed/statistik_query_ulang.csv` dan `statistik_query_acak.csv` (hash SHA-256 identik sebelum/sesudah).
 - **Acceptance criteria:** Notebook berhasil dijalankan dari root; `statistik_query_*.csv` tidak berubah selain format yang disengaja; tidak ada cell kosong.
 - **Dependensi:** P12-07
-- **Catatan:** **Belum disetujui** untuk dikerjakan pada Build ini — perlu persetujuan terpisah karena menyentuh kode notebook dan menulis ulang file turunan.
+- **Catatan:** Diverifikasi dari root repository **dan** dari folder `notebooks/`; `data/` tidak berubah. Path lama (`Path.cwd().resolve().parent`) dari root menunjuk ke `/home/masapis/Projects/data/processed/...` yang tidak ada.

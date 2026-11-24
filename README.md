@@ -88,7 +88,7 @@ Notebook P12 ditulis untuk dijalankan dari direktori `notebooks/`:
 cd notebooks && jupyter notebook analisis_probstat.ipynb
 ```
 
-Perbaikan portabilitas `ROOT` masih menjadi ticket **P12-10** dan belum disetujui.
+Penentuan `ROOT` toleran terhadap direktori eksekusi (P12-10 selesai): notebook dapat dijalankan dari root repository maupun dari folder `notebooks/`.
 
 ## Hasil P12 — dataset utama (terverifikasi)
 
@@ -115,7 +115,7 @@ Median pada `ulang`: 10,566 / 10,648 / 10,685 ms. Statistik lengkap (jumlah, min
 
 | Pertemuan | Fokus | Status tiket |
 |---|---|---|
-| P12 | Pengumpulan, cleaning, statistik deskriptif | DONE dengan catatan |
+| P12 | Pengumpulan, cleaning, statistik deskriptif | DONE |
 | P13 | EDA, ≥3 visualisasi, outlier, notebook tahap 2 | TODO |
 | P14 | Distribusi, simulasi, uji hipotesis α=0,05, presentasi kemajuan (30 Nov–4 Des 2026) | TODO |
 | P15 | Korelasi/regresi pada unit agregat n=30, artikel, laporan PDF, presentasi akhir (7–11 Des 2026), reproduksi | TODO |

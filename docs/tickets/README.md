@@ -6,7 +6,7 @@ Sistem pelacakan P12–P15. Setiap ticket memuat sub-ticket bernomor agar seluru
 
 | ID | Judul | Pertemuan | Status | Bukti utama | Dependensi |
 |---|---|---|---|---|---|
-| [P12](P12_DATA_COLLECTION.md) | Pengumpulan Data, Cleaning, dan Statistik Deskriptif | 12 | **DONE dengan catatan** | `data/raw/dns_data.csv`, `docs/audit_cleaning.txt`, `notebooks/analisis_probstat.ipynb` | — |
+| [P12](P12_DATA_COLLECTION.md) | Pengumpulan Data, Cleaning, dan Statistik Deskriptif | 12 | **DONE** | `data/raw/dns_data.csv`, `docs/audit_cleaning.txt`, `notebooks/analisis_probstat.ipynb` | — |
 | [P13](P13_EDA_VISUALIZATION.md) | Exploratory Data Analysis dan Visualisasi | 13 | **TODO** | belum tersedia | P12 |
 | [P14](P14_PROBABILITY_INFERENCE.md) | Simulasi Probabilitas dan Inferensi Statistik | 14 | **TODO** | belum tersedia | P13 |
 | [P15](P15_FINAL_ANALYSIS.md) | Korelasi, Regresi, dan Finalisasi | 15 | **TODO** | belum tersedia | P14 |
@@ -17,7 +17,7 @@ Sistem pelacakan P12–P15. Setiap ticket memuat sub-ticket bernomor agar seluru
 - `DONE` — bukti diperiksa dan acceptance criteria terpenuhi.
 - `BLOCKED` — ada ketergantungan/keputusan yang belum terselesaikan.
 
-P12 dinyatakan **DONE dengan catatan** karena 9 dari 10 sub-ticket selesai (termasuk logbook yang diisi pada Build ini); satu sub-ticket (P12-10, uji keterulangan notebook) masih TODO dan menunggu persetujuan terpisah. Lihat detail di ticket.
+P12 dinyatakan **DONE**: 10 dari 10 sub-ticket selesai, termasuk logbook dan uji keterulangan notebook. Lihat detail di ticket.
 
 ## Aturan pembaruan
 

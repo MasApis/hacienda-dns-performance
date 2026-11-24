@@ -130,7 +130,7 @@ Pemeriksaan data minimum: jumlah baris 600, 1 run_id, 10 putaran × 60, crosstab
 
 ## 13. Cara menjalankan notebook
 
-Notebook `notebooks/analisis_probstat.ipynb` belum diubah dan menentukan root dengan `Path.cwd().resolve().parent`. Jalankan dari direktori `notebooks/`:
+Notebook `notebooks/analisis_probstat.ipynb` menentukan root dari `cwd` dan naik satu level bila dataset tidak ditemukan. Dapat dijalankan dari root repository atau dari folder `notebooks/`:
 
 ```bash
 source .venv/bin/activate
@@ -144,13 +144,13 @@ Atau dari root repo dengan nbconvert (cwd otomatis mengikuti direktori notebook)
 jupyter nbconvert --to notebook --execute notebooks/analisis_probstat.ipynb --output /tmp/opencode/analisis_probstat_executed.ipynb
 ```
 
-Jalankan sel berurutan. Notebook menulis `data/processed/statistik_query_{ulang,acak}.csv`; periksa `git diff` setelahnya. Perbaikan portabilitas `ROOT` masih menjadi pekerjaan P12-10 dan belum disetujui.
+Jalankan sel berurutan. Notebook menulis `data/processed/statistik_query_{ulang,acak}.csv`; periksa `git diff` setelahnya. Portabilitas `ROOT` sudah diverifikasi dari kedua direktori (P12-10).
 
 ## 14. Status pekerjaan
 
 **Selesai (P12, terverifikasi):** lingkungan & Git, verifikasi resolver, collector, dua pilot test, revisi metodologi satu sesi, pengumpulan 600 observasi, cleaning + audit, statistik deskriptif, notebook tahap pertama.
 
-**Belum selesai:** pengisian narasi hasil di README/RINGKASAN (dilakukan pada Build ini), uji keterulangan notebook (P12-10), seluruh luaran P13 (EDA/visualisasi), P14 (probabilitas/inferensi + presentasi kemajuan), P15 (korelasi/regresi, artikel, laporan PDF, presentasi akhir, petunjuk reproduksi final). Lihat [`docs/tickets/README.md`](docs/tickets/README.md).
+**Belum selesai:** seluruh luaran P13 (EDA/visualisasi), P14 (probabilitas/inferensi + presentasi kemajuan), P15 (korelasi/regresi, artikel, laporan PDF, presentasi akhir, petunjuk reproduksi final). Lihat [`docs/tickets/README.md`](docs/tickets/README.md).
 
 ## 15. Larangan mengarang
 

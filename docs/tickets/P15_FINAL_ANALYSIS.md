@@ -100,7 +100,7 @@
 - **Output/Bukti:** `README.md` sudah ada; `README.txt` belum tersedia.
 - **Acceptance criteria:** Perintah dapat dijalankan; tidak ada jalur yang mengharuskan menjalankan collector; tidak ada perubahan pada data mentah.
 - **Dependensi:** P15-06
-- **Catatan:** Perbaikan portabilitas `ROOT` notebook (P12-10) sebaiknya selesai sebelum butir ini.
+- **Catatan:** Perbaikan portabilitas `ROOT` notebook (P12-10) sudah selesai, sehingga butir ini dapat langsung memakai notebook.
 
 ## P15-09 — Struktur pengumpulan akhir
 

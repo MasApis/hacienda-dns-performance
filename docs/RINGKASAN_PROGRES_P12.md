@@ -2,7 +2,7 @@
 
 **Penelitian:** Analisis Perbandingan Waktu Resolusi DNS pada Resolver Google, Cloudflare, dan ISP Berdasarkan Pendekatan Probabilitas dan Statistika  
 **Tanggal ringkasan:** 24 November 2026  
-**Posisi aktual:** Seluruh pekerjaan teknis P12 selesai dan diverifikasi terhadap file: 600 observasi utama terkumpul, cleaning diaudit tanpa penghapusan baris, statistik deskriptif dan notebook tahap pertama tersedia. Logbook hasil pengukuran telah diisi. Yang tersisa: uji keterulangan notebook (P12-10) dan seluruh luaran P13–P15.
+**Posisi aktual:** Seluruh pekerjaan teknis P12 selesai dan diverifikasi terhadap file: 600 observasi utama terkumpul, cleaning diaudit tanpa penghapusan baris, statistik deskriptif dan notebook tahap pertama tersedia. Logbook hasil pengukuran telah diisi. Yang tersisa: seluruh luaran P13–P15.
 
 Sumber kebenaran metode: [`METODOLOGI.md`](METODOLOGI.md). Status pekerjaan: [`tickets/README.md`](tickets/README.md).
 
@@ -75,12 +75,12 @@ Tabel lengkap including jumlah, minimum, maksimum, varians, standar deviasi, Q1�
 | Statistik deskriptif & notebook P12 | Selesai | `notebooks/analisis_probstat.ipynb`, 2 CSV statistik |
 | Logbook hasil pengukuran | Selesai | `docs/LOGBOOK_PENGUMPULAN_DATA_HACIENDA.xlsx` |
 | Dokumentasi README/RINGKASAN/ticket | Selesai | `README.md`, file ini, `docs/tickets/` |
-| Uji keterulangan notebook (P12-10) | **Belum disetujui** | — |
+| Uji keterulangan notebook (P12-10) | Selesai | `notebooks/analisis_probstat.ipynb` (hash CSV identik) |
 | P13 EDA & visualisasi | **Belum dimulai** | — |
 | P14 probabilitas & inferensi | **Belum dimulai** | — |
 | P15 korelasi, regresi, finalisasi | **Belum dimulai** | — |
 
-Collector **tidak boleh dijalankan ulang**: output mode append akan menambah baris ke `data/raw/dns_data.csv`. Perbaikan `ROOT` notebook dan penghapusan cell kosong masuk P12-10, menunggu persetujuan terpisah.
+Collector **tidak boleh dijalankan ulang**: output mode append akan menambah baris ke `data/raw/dns_data.csv`. Perbaikan `ROOT` notebook dan penghapusan cell kosong (P12-10) selesai; notebook terverifikasi dari root maupun folder `notebooks/`.
 
 ## 6. Kebijakan kualitas penelitian
 
