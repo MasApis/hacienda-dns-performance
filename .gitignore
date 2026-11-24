@@ -10,3 +10,6 @@ __pycache__/
 
 # Editor and system files
 .DS_Store
+
+# Course reference material (not part of the research output)
+docs/references/*.pdf
